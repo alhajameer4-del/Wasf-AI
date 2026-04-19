@@ -1,0 +1,72 @@
+import streamlit as st
+import time
+
+# --- إعدادات الصفحة والهوية ---
+st.set_page_config(page_title="وصْف AI - النسخة الاحترافية", page_icon="🚀", layout="wide")
+
+# تصميم الواجهة بالألوان التي اخترناها
+st.markdown("""
+    <style>
+    .main { background-color: #f5f7f9; }
+    .stButton>button { width: 100%; border-radius: 10px; height: 3em; background-color: #007bff; color: white; }
+    .description-box { padding: 20px; border-radius: 10px; background-color: #ffffff; border: 1px solid #e0e0e0; }
+    </style>
+    """, unsafe_allow_html=True)
+
+st.title("🚀 وصْف AI: الحل الذكي للمتاجر الإلكترونية")
+st.write("قم بتوليد أوصاف تسويقية احترافية لمنتجاتك في ثوانٍ معدودة.")
+
+# --- القائمة الجانبية ---
+st.sidebar.image("https://cdn-icons-png.flaticon.com/512/2103/2103633.png", width=100)
+st.sidebar.title("لوحة التحكم")
+category = st.sidebar.selectbox("تصنيف المنتج:", ["إلكترونيات", "ملابس وأزياء", "منزل ومطبخ", "عقارات", "خدمات"])
+target_audience = st.sidebar.select_slider("الجمهور المستهدف:", options=["عام", "شباب", "رجال أعمال", "عائلات"])
+
+st.sidebar.divider()
+st.sidebar.subheader("💎 العضوية المميزة")
+if st.sidebar.button("تفعيل الاشتراك (10 USDT)"):
+    st.sidebar.info("أرسل المبلغ إلى المحفظة التالية:")
+    st.sidebar.code("TGLVcNSTevGibK5Ku3NhHzxQEBxLm7MiSj")
+    st.sidebar.caption("سيتم التفعيل يدوياً فور تأكيد المعاملة.")
+
+# --- منطقة العمل الرئيسية ---
+col1, col2 = st.columns([1, 1.2], gap="large")
+
+with col1:
+    st.subheader("📝 تفاصيل المنتج")
+    p_name = st.text_input("اسم المنتج:", placeholder="مثال: سماعة بلوتوث رياضية")
+    p_features = st.text_area("أهم المميزات (ميزة في كل سطر):", placeholder="عازلة للضوضاء\nبطارية 20 ساعة\nمقاومة للعرق", height=150)
+    
+    generate_btn = st.button("توليد الوصف الاحترافي ✨")
+
+with col2:
+    st.subheader("✨ الوصف التسويقي المقترح")
+    if generate_btn:
+        if p_name and p_features:
+            with st.spinner('جاري تحليل البيانات وصياغة المحتوى...'):
+                time.sleep(2) # محاكاة للذكاء الاصطناعي
+                
+                # خوارزمية الصياغة الداخلية (بدون API)
+                features_list = p_features.split('\n')
+                bullet_points = "\n".join([f"• {f.strip()}" for f in features_list if f.strip()])
+                
+                final_description = f"""
+### 🌟 {p_name} | الاختيار الأمثل لـ {target_audience}
+
+**لماذا تختار هذا المنتج؟**
+هل تبحث عن الجودة والتميز؟ {p_name} مصمم خصيصاً ليمنحك تجربة فريدة في عالم {category}. بفضل تصميمه العصري ومواصفاته العالية، يضمن لك الأداء الذي تطمح إليه.
+
+**أهم ما يميزه:**
+{bullet_points}
+
+**اطلبه الآن واجعل حياتك أسهل!**
+                """
+                
+                st.markdown(f'<div class="description-box">{final_description}</div>', unsafe_allow_html=True)
+                st.success("تم التوليد بنجاح!")
+                st.download_button("نسخ النص الجاهز", final_description)
+        else:
+            st.warning("الرجاء إدخال اسم المنتج ومميزاته أولاً.")
+
+st.markdown("---")
+st.caption("حقوق الملكية © 2026 - مشروع وصْف AI")
